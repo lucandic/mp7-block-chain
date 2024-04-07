@@ -35,7 +35,10 @@ public class BlockChain {
   // methods
   // mines a new candidate block to be added to the end of the chain. The returned Block should be
   // valid to add onto this chain.
-  public Block mine(int amount) {}
+  public Block mine(int amount) {
+    // STUB
+    return null;
+  }
 
   // returns the size of the blockchain. Note that number of the blocks provides a convenient method
   // for quickly determining the size of the chain.
@@ -85,7 +88,10 @@ public class BlockChain {
 
   // walks the blockchain and ensures that its blocks are consistent (the balances are legal) and
   // valid (as in append).
-  public boolean isValidBlockChain() {}
+  public boolean isValidBlockChain() {
+    // STUB
+    return false;
+  }
 
   // prints Alexis’s and Blake’s respective balances in the form Alexis: <amt>, Blake: <amt> on a
   // single line, e.g., Alexis: 300, Blake: 0.

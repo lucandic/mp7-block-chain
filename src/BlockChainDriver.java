@@ -7,6 +7,7 @@ public class BlockChainDriver {
     PrintWriter pen = new PrintWriter(System.out);
     int initAmount = Integer.valueOf(args[0]);
 
+    
     while (input.hasNextLine()) {
       String command = input.next();
       if (command.equals("mine")) {

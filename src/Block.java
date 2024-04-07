@@ -35,7 +35,7 @@ public class Block {
     this.nonce = nonce;
   } // Block(int num, int amount, Hash prevHash, long nonce)
 
-  // methods
+  // method
   // returns the number of this block
   public int getNum() {
     return this.index;

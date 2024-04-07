@@ -25,7 +25,7 @@ public class Hash {
   } // getData()
 
   // returns true if this hash meets the criteria for validity, i.e., its first
-  // three indices contain zeroes.
+  // three indices contain zeroes
   public boolean isValid() {
     for (int i = 0; i < 3; i++) {
       if (Byte.toUnsignedInt(this.hash[i]) != 0) {
