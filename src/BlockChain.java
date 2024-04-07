@@ -6,8 +6,8 @@ public class BlockChain {
 
     Block prev;
     Block next;
-    Block contents;    
-    
+    Block contents;
+
     public Node(Block prev, Block next, Block contents) {
       this.prev = prev;
       this.next = next;
@@ -20,7 +20,7 @@ public class BlockChain {
   Node last;
   int alexisBalance;
   int blakeBalance;
-  
+
   // constructor
   // creates a BlockChain that possess a single block the starts with the given initial amount. Note
   // that to create this block, the prevHash field should be ignored when calculating the block’s
@@ -46,7 +46,7 @@ public class BlockChain {
   // adds this block to the list, throwing an IllegalArgumentException if this block cannot be added
   // to the chain (because it has an invalid hash,
   // because its hash is inappropriate for the contents, or because the previous hash is incorrect).
-  public void append(Block blk) throws IllegalArgumentException{
+  public void append(Block blk) throws IllegalArgumentException {
 
     // check if hash is valid
     if (!(blk.getHash().isValid())) {
@@ -61,7 +61,7 @@ public class BlockChain {
     this.last.next = blk;
     this.last = new Node(this.last.contents, null, blk);
     if (!this.isValidBlockChain()) {
-      
+
     }
   }
 
