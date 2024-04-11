@@ -1,18 +1,9 @@
-## Getting Started
+## MP7 - Blockchain
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Group: Candice Lu, Marina Ananias, Medhashree Adhikari
+Due Date: Wednesday, April 10th, 2024
 
-## Folder Structure
+Acknowledgements:
+-Evening Tutors: Audrey and Elizabeth
 
-The workspace contains two folders by default, where:
-
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+Description: This blockchain program mines for hashes given a number, and puts that information in a block. It contains both the backend and front end with an user interface that reads the initial value and commands to execute.

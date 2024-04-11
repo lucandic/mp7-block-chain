@@ -1,6 +1,14 @@
 import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * Use Block to implement a BlockChain class which is a singly-linked structure with a first and
+ * last pointer
+ * 
+ * @author Candice Lu
+ * @author Marina Ananias
+ * @author Medhashree Adhikari
+ */
 public class BlockChain {
 
   public class Node {
@@ -29,7 +37,7 @@ public class BlockChain {
   public BlockChain(int initial) throws NoSuchAlgorithmException {
     this.first = new Node(null, null, new Block(0, initial, null));
     this.last = this.first;
-    this.alexisBalance = 0;
+    this.alexisBalance = initial;
     this.blakeBalance = 0;
   } // BlockChain(int initial)
 
@@ -49,36 +57,37 @@ public class BlockChain {
   // adds this block to the list, throwing an IllegalArgumentException if this block cannot be added
   // to the chain (because it has an invalid hash,
   // because its hash is inappropriate for the contents, or because the previous hash is incorrect).
-  public void append(Block blk) throws IllegalArgumentException, NoSuchAlgorithmException{
+  public void append(Block blk) throws IllegalArgumentException, NoSuchAlgorithmException {
 
     // check if hash is valid
     if (!(blk.getHash().isValid())) {
       throw new IllegalArgumentException();
-    }
+    } // cond check
 
     // check if hash is appropriate for its contents
-    Hash newHash = new Hash(blk.getHash().getData());
-    if (!(newHash.equals(blk.getHash()))) {
+    Hash newHash = new Hash(blk.getHash().data); // UNSAFE
+    if (!newHash.equals(blk.getHash())) {
       throw new IllegalArgumentException();
-    }
+    } // cond check
 
     // check if previous hash is correct
     Hash prevHash = this.last.contents.getHash();
     if (!(prevHash.equals(blk.getPrevHash()))) {
       throw new IllegalArgumentException();
-    }
+    } // cond check
 
     // check if balance is valid
-    int amount = blk.getAmount();
-    if ((alexisBalance + amount) < 0 || (blakeBalance - amount) < 0) {
-      throw new IllegalArgumentException();
-    }
+    // int amount = blk.getAmount();
+    // if ((alexisBalance + amount) < 0 || (blakeBalance - amount) < 0) {
+    // throw new IllegalArgumentException();
+    // }
 
     // add block to blockchain and if balance is valid
 
     Node newLast = new Node(this.last, null, blk);
     this.last.next = newLast;
     this.last = newLast;
+    this.last.next = null;
   } // append(blk)
 
   // removes the last block from the chain, returning true. If the chain only contains a single
@@ -103,48 +112,49 @@ public class BlockChain {
   // valid (as in append).
   public boolean isValidBlockChain() throws NoSuchAlgorithmException {
 
-    Node cur = this.first;
-    Block curBlock = this.first.contents;
-    int curAlexis = 0;
-    int curBlake = 0;
+    Node cur = this.first.next;
+    Block curBlock = this.first.next.contents;
+    // int curAlexis = 0;
+    // int curBlake = 0;
 
-    for (int i = 0; i < this.getSize(); i++) {
+    while(cur != null) {
 
-      // check if hash is valid
-      if (!(this.getHash().isValid())) {
-        throw new IllegalArgumentException();
-      }
+      // // check if hash is valid
+      // if (!(this.getHash().isValid())) {
+      //   throw new IllegalArgumentException();
+      // }
 
-      // check if hash is appropriate for its contents
-      Hash newHash = new Hash(curBlock.getHash().getData());
-      if (!(newHash.equals(curBlock.getHash()))) {
-        throw new IllegalArgumentException();
-      }
+      // // check if hash is appropriate for its contents
+      // Hash newHash = new Hash(curBlock.getHash().data);
+      // if (!(newHash.equals(curBlock.getHash()))) {
+      //   throw new IllegalArgumentException();
+      // }
 
-      // check if previous hash is correct
-      Hash prevHash = cur.prev.contents.getHash();
-      if (!(prevHash.equals(curBlock.getPrevHash()))) {
-        throw new IllegalArgumentException();
-      }
+      // // check if previous hash is correct
+      // Hash prevHash = cur.prev.contents.getHash();
+      // if (!(prevHash.equals(curBlock.getPrevHash()))) {
+      //   throw new IllegalArgumentException();
+      // }
 
       // check if balance is valid
       int amount = curBlock.getAmount();
-      curAlexis += amount;
-      curBlake -= amount;
-      if (curAlexis < 0 || curBlake < 0) {
-        throw new IllegalArgumentException();
+      this.alexisBalance += amount;
+      this.blakeBalance -= amount;
+      if (this.alexisBalance < 0 || this.blakeBalance < 0) {
+        return false;
       }
-
       cur = cur.next;
-      curBlock = cur.next.contents;
+      if (cur != null) {
+        curBlock = cur.next.contents; 
+      }
     }
-    return false;
+    return true;
   } // isValidBlockChain()
 
   // prints Alexis’s and Blake’s respective balances in the form Alexis: <amt>, Blake: <amt> on a
   // single line, e.g., Alexis: 300, Blake: 0.
   public void printBalances(PrintWriter pen) {
-    pen.print("Alexis: " + this.alexisBalance + ", Blake: " + this.blakeBalance);
+    pen.print("Alexis: " + this.alexisBalance + ", Blake: " + this.blakeBalance + "\n");
   } // printBalances(pen)
 
   // returns a string representation of the BlockChain which is simply the string representation of
@@ -152,8 +162,10 @@ public class BlockChain {
   public String toString() {
     Node cur = this.first;
     String output = "";
-    while (cur.next != null) {
+
+    while (cur != null) {
       output += cur.contents.toString();
+      cur = cur.next;
     }
     return output;
   } // toString()

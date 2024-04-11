@@ -1,6 +1,13 @@
 import java.nio.ByteBuffer;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * Class for the data contained in each node of the blockchain
+ * 
+ * @author Candice Lu
+ * @author Marina Ananias
+ * @author Medhashree Adhikari
+ */
 public class Block {
   // fields
   // number of the block in the blockchain
@@ -47,7 +54,7 @@ public class Block {
   // for loop that loops potential nonce values (from zero?) until we find a valid nonce
   static public long calcNonce(int num, int amount, Hash prevHash) throws NoSuchAlgorithmException {
     long non = -1;
-    Hash temp= calHash(num, amount, prevHash, non);
+    Hash temp = calHash(num, amount, prevHash, non);
     while (!temp.isValid()) {
       non++;
       temp = calHash(num, amount, prevHash, non);
@@ -55,19 +62,21 @@ public class Block {
     return non;
   } // calcNonce(num, amount, prevHash)
 
-  static public Hash calHash(int num, int amount, Hash prevHash, long nonce) throws NoSuchAlgorithmException {
+  static public Hash calHash(int num, int amount, Hash prevHash, long nonce)
+      throws NoSuchAlgorithmException {
     ByteBuffer blockData;
     // if block is the first one
-    if(prevHash == null) {
+    if (prevHash == null) {
       // calc without prevHash
       blockData = ByteBuffer.allocate((Integer.BYTES * 2) + Long.BYTES + Byte.BYTES);
     } else {
       // else, calc with prevHash
-      blockData = ByteBuffer.allocate((Integer.BYTES * 2) + Long.BYTES + (prevHash.getData().length * Byte.BYTES));
+      blockData = ByteBuffer
+          .allocate((Integer.BYTES * 2) + Long.BYTES + (prevHash.getData().length * Byte.BYTES));
     }
-    
+
     blockData.putInt(num).putInt(amount);
-    
+
     if (num != 0) {
       // allocate for hash
       blockData.put(prevHash.getData());
@@ -106,7 +115,11 @@ public class Block {
 
   // returns a string representation of the block
   public String toString() {
+    if (this.prevHash == null) {
+      return "Block " + this.index + " (Amount: " + this.data + ", Nonce: " + this.nonce
+          + ", prevHash: " + null + ", hash: " + this.hash.toString() + ")\n";
+    }
     return "Block " + this.index + " (Amount: " + this.data + ", Nonce: " + this.nonce
-        + ", prevHash: " + this.prevHash + ", hash: " + this.hash + ")";
+        + ", prevHash: " + this.prevHash.toString() + ", hash: " + this.hash.toString() + ")\n";
   } // toString()
 } // class Block

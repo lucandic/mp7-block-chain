@@ -1,14 +1,22 @@
-import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
+/**
+ * Class that deals with hash and includes a wrapper class that wraps up a byte array along with
+ * some operations we would like to perform on it
+ * 
+ * @author Candice Lu
+ * @author Marina Ananias
+ * @author Medhashree Adhikari
+ */
 public class Hash {
 
   // fields
   byte[] hash;
   byte[] data;
 
+  // constructor
   // constructs a new Hash object that contains the given hash (as an array of bytes).
   public Hash(byte[] data) throws NoSuchAlgorithmException {
     this.data = data;
@@ -38,15 +46,17 @@ public class Hash {
   // returns the string representation of the hash as a string of hexadecimal
   // digits, 2 digits per byte.
   public String toString() {
-    char[] outputArr = new char[this.hash.length * 2];
+    String[] outputArr = new String[this.hash.length];
     for (int i = 0; i < this.hash.length; i++) {
-
+      outputArr[i] = String.format("%02x", Byte.toUnsignedInt(this.hash[i]));
     }
-    return String.format("%02d", outputArr);
+
+    return String.join("", outputArr);
   } // toString()
 
   // returns true if this hash is structurally equal to the argument.
   public boolean equals(Object other) {
+    // if other is not a Hash, return false
     if (!(other instanceof Hash)) {
       return false;
     }
